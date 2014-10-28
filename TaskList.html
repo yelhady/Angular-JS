@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<title> Tasks List </title>
+		<script type="text/javascript" src="angular.min.js"></script>
+		<script type="text/javascript">
+			function TaskListController($scope){
+				$scope.list=['Task 1', 'Task 2', 'Task 3'];
+
+				$scope.addTask = function(){
+					if($scope.task == '' || $scope.task == null)
+						return;
+
+					$scope.list.push($scope.task);
+					$scope.task = null;
+				};
+
+				$scope.update = function(index){
+					$scope.list.splice(index, 1);
+				};
+			}
+		</script>
+	</head>
+	<body>
+		<div ng-controller="TaskListController">
+			Check the done task to be deleted:
+			<ul>
+				<li ng-repeat="item in list track by $index"> <!-- track by $index .. to allow duplicates -->
+					<input type="checkbox" ng-model="checkBox" ng-change="update($index)">{{item}}
+				</li>
+			</ul>
+
+			<input type="text" ng-model="task"/>
+			<button ng-click="addTask()">Add Task</button>
+		</div>
+	</body>
+</html>
